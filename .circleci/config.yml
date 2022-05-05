@@ -1,0 +1,20 @@
+version: 2.1
+
+machine: true
+
+orbs:
+  maven: archmix/maven@2.1.0
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - maven/build_machine:
+          context: Archmix
+      - maven/release:
+          context: Archmix
+          requires:
+            - maven/build_machine
+          filters:
+            branches:
+              only: master

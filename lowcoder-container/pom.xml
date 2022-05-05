@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.archmix</groupId>
+    <artifactId>lowcoder-oss</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>lowcoder-container</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>lowcoder-graphql</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>lowcoder-openapi</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>lowcoder-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-unit</artifactId>
+      <version>4.2.6</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>legolas-postgresql</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>legolas-provided</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

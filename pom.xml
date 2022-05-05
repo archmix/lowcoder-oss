@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.archmix</groupId>
+    <artifactId>java-parent</artifactId>
+    <version>1.8.2</version>
+  </parent>
+
+  <name>Lowcoder Open Source Solution</name>
+  <description>Lowcoder is a low code backend solution for publishing a REST or GraphQL API based on a database.</description>
+
+  <artifactId>lowcoder-oss</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>lowcoder-container</module>
+    <module>lowcoder-core</module>
+    <module>lowcoder-graphql</module>
+    <module>lowcoder-openapi</module>
+    <module>lowcoder-sql</module>
+    <module>lowcoder-vertx</module>
+  </modules>
+
+  <properties>
+    <lowcoderVersion>0.0.1-SNAPSHOT</lowcoderVersion>
+    <legolasVersion>1.0.12</legolasVersion>
+    <vertxVersion>4.2.6</vertxVersion>
+    <hamcrestVersion>1.3</hamcrestVersion>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!--LOWCODER -->
+      <dependency>
+        <groupId>org.archmix</groupId>
+        <artifactId>lowcoder-container</artifactId>
+        <version>${lowcoderVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.archmix</groupId>
+        <artifactId>lowcoder-core</artifactId>
+        <version>${lowcoderVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.archmix</groupId>
+        <artifactId>lowcoder-graphql</artifactId>
+        <version>${lowcoderVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.archmix</groupId>
+        <artifactId>lowcoder-openapi</artifactId>
+        <version>${lowcoderVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.archmix</groupId>
+        <artifactId>lowcoder-sql</artifactId>
+        <version>${lowcoderVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.archmix</groupId>
+        <artifactId>lowcoder-vertx</artifactId>
+        <version>${lowcoderVersion}</version>
+      </dependency>
+
+      <!-- LEGOLAS -->
+      <dependency>
+        <groupId>org.archmix</groupId>
+        <artifactId>legolas-oss</artifactId>
+        <version>${legolasVersion}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- VERTX -->
+      <dependency>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-dependencies</artifactId>
+        <version>${vertxVersion}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-core</artifactId>
+        <version>${hamcrestVersion}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>
