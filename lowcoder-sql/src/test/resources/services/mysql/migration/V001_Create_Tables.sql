@@ -23,3 +23,8 @@ CREATE TABLE orders (
         ON DELETE CASCADE
         ON UPDATE RESTRICT
 ) ENGINE=INNODB;
+
+CREATE TABLE auto_generation_id (
+    id int NOT NULL AUTO_INCREMENT,
+    CONSTRAINT pk_auto_generation_id PRIMARY KEY (id)
+) ENGINE=INNODB;

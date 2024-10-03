@@ -19,6 +19,24 @@
     </dependency>
 
     <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>lowcoder-testsuite</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>legolas-postgresql</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>legolas-provided</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-web</artifactId>
     </dependency>

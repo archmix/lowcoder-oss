@@ -14,16 +14,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-web</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
-      <artifactId>lowcoder-vertx</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <scope>provided</scope>
@@ -36,12 +26,34 @@
 
     <dependency>
       <groupId>org.archmix</groupId>
+      <artifactId>legolas-provided</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.archmix</groupId>
       <artifactId>legolas-core</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.archmix</groupId>
-      <artifactId>legolas-provided</artifactId>
+      <artifactId>lowcoder-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>lowcoder-sql</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>lowcoder-testsuite</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>legolas-postgresql</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

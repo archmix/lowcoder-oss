@@ -2,9 +2,7 @@ package databaseMetadataTest;
 
 import legolas.mysql.interfaces.MySQLEntry;
 import legolas.mysql.interfaces.MySQLServiceId;
-import legolas.sql.interfaces.DatasourceFactory;
 import lowcoder.metadata.infra.DatabaseMetadata;
-import legolas.async.api.interfaces.Promise;
 import legolas.config.api.interfaces.Configuration;
 import legolas.postgre.interfaces.PostgreSQLEntry;
 import legolas.postgre.interfaces.PostgreSQLServiceId;
@@ -15,7 +13,6 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Optional;
@@ -26,8 +23,7 @@ public class DatabaseMetadataTest {
 
   @BeforeClass
   public static void create() {
-    Promise<RunningEnvironment> promise = RuntimeEnvironment.TEST.start(Executors.newSingleThreadExecutor());
-    environment = promise.get();
+    environment = RuntimeEnvironment.TEST.start(Executors.newSingleThreadExecutor()).get();
   }
 
   @Test
@@ -40,9 +36,7 @@ public class DatabaseMetadataTest {
     String password = config.getString(PostgreSQLEntry.PASSWORD).get();
 
     Connection connection = openConnection(url, driver, username, password);
-    Tables tables = DatabaseMetadata.create(connection).getTables(DatabaseCatalog.empty(), DatabaseSchema.create("public"));
-
-    this.doAssertion(tables);
+    DatabaseMetadata.create(connection).loadTables(DatabaseCatalog.empty(), DatabaseSchema.create("public"), this::doAssertion);
   }
 
   @Test
@@ -55,48 +49,75 @@ public class DatabaseMetadataTest {
     String password = config.getString(MySQLEntry.PASSWORD).get();
 
     Connection connection = openConnection(url, driver, username, password);
-    Tables tables = DatabaseMetadata.create(connection).getTables(DatabaseCatalog.empty(), DatabaseSchema.create(username));
-
-    this.doAssertion(tables);
+    DatabaseMetadata.create(connection).loadTables(DatabaseCatalog.empty(), DatabaseSchema.create(username), this::doAssertion);
   }
 
-  private void doAssertion(Tables tables) {
+  private void doAssertion(Table table) {
+    if(table.getName().equalsIgnoreCase("migrami_snapshot")){
+      return;
+    }
 
-    Table persons = tables.get("persons");
-    Column id = persons.getPrimaryKeys().get(0);
-    Assert.assertEquals(id.getType(), Column.ColumnType.INTEGER);
-    Assert.assertFalse(id.getConstraints().get(ConstraintType.NULLABLE));
+    if(table.getName().equalsIgnoreCase("persons")) {
+      assertPersonsTable(table);
+      return;
+    }
 
-    Optional<Column> lastname = persons.getColumn("lastname");
+    if(table.getName().equalsIgnoreCase("orders")) {
+      assertOrdersTable(table);
+      return;
+    }
+
+    if(table.getName().equalsIgnoreCase("auto_generation_id")) {
+      assertAutoGenerationId(table);
+      return;
+    }
+
+    Assert.fail("Please update this test to reflect the database structure");
+  }
+
+  private void assertAutoGenerationId(Table table){
+    PrimaryKey id = table.getPrimaryKeys().iterator().next();
+    Assert.assertEquals(id.getColumn().getType(), Column.ColumnType.INTEGER);
+    Assert.assertFalse(id.getColumn().getConstraints().get(ConstraintType.NULLABLE));
+    Assert.assertTrue(id.getGenerated());
+  }
+
+  private void assertPersonsTable(Table table) {
+    PrimaryKey id = table.getPrimaryKeys().iterator().next();
+    Assert.assertEquals(id.getColumn().getType(), Column.ColumnType.INTEGER);
+    Assert.assertFalse(id.getColumn().getConstraints().get(ConstraintType.NULLABLE));
+
+    Optional<Column> lastname = table.getColumn("lastname");
     Assert.assertTrue(lastname.isPresent());
     Assert.assertEquals(lastname.get().getType(), Column.ColumnType.VARCHAR);
     Assert.assertFalse(lastname.get().getConstraints().get(ConstraintType.NULLABLE));
 
-    Optional<Column> firstname = persons.getColumn("firstname");
+    Optional<Column> firstname = table.getColumn("firstname");
     Assert.assertTrue(firstname.isPresent());
     Assert.assertEquals(firstname.get().getType(), Column.ColumnType.VARCHAR);
     Assert.assertTrue(firstname.get().getConstraints().get(ConstraintType.NULLABLE));
+  }
 
-    Table orders = tables.get("orders");
-    Assert.assertEquals(2, orders.getForeignKeys().size());
+  private void assertOrdersTable(Table table) {
+    Assert.assertEquals(2, table.getForeignKeys().size());
 
-    Column personId = orders.getColumn("person_id").get();
-    Assert.assertEquals(personId.getType(), Column.ColumnType.INTEGER);
+    ForeignKey personId = table.getForeignKey("person_id").get();
+    Assert.assertEquals(personId.getColumn().getType(), Column.ColumnType.INTEGER);
 
-    ForeignKey fk = personId.getConstraints().get(ConstraintType.FOREIGN_KEY);
-    Assert.assertEquals(fk.getColumn().getName(), id.getName());
-    Assert.assertEquals(fk.getIndexName().toString(), "fk_person_order");
-    Assert.assertTrue(isRestrictOrNoAction(fk.getOnDelete()));
-    Assert.assertEquals(ForeignKey.Rule.SET_NULL, fk.getOnUpdate());
+    Assert.assertEquals(personId.getTableName(), "persons");
+    Assert.assertEquals(personId.getColumn().getName(), "id");
+    Assert.assertEquals(personId.getIndexName(), "fk_person_order");
+    Assert.assertTrue(isRestrictOrNoAction(personId.getOnDelete()));
+    Assert.assertEquals(ForeignKey.Rule.SET_NULL, personId.getOnUpdate());
 
-    Column personId2 = orders.getColumn("person_id2").get();
-    Assert.assertEquals(personId2.getType(), Column.ColumnType.INTEGER);
+    ForeignKey personId2 = table.getForeignKey("person_id2").get();
+    Assert.assertEquals(personId2.getColumn().getType(), Column.ColumnType.INTEGER);
 
-    ForeignKey fk2 = personId2.getConstraints().get(ConstraintType.FOREIGN_KEY);
-    Assert.assertEquals(fk2.getColumn().getName(), id.getName());
-    Assert.assertEquals(fk2.getIndexName().toString(), "fk_person_order2");
-    Assert.assertEquals(ForeignKey.Rule.CASCADE, fk2.getOnDelete());
-    Assert.assertTrue(isRestrictOrNoAction(fk.getOnDelete()));
+    Assert.assertEquals(personId2.getTableName(), "persons");
+    Assert.assertEquals(personId2.getColumn().getName(), "id");
+    Assert.assertEquals(personId2.getIndexName(), "fk_person_order2");
+    Assert.assertEquals(ForeignKey.Rule.CASCADE, personId2.getOnDelete());
+    Assert.assertTrue(isRestrictOrNoAction(personId2.getOnDelete()));
   }
 
   private boolean isRestrictOrNoAction(ForeignKey.Rule rule){
@@ -105,7 +126,6 @@ public class DatabaseMetadataTest {
 
   private static Connection openConnection(String url, String driver, String username, String password){
     try {
-      DataSource datasource = DatasourceFactory.toDataSource(url, driver, username, password);
       return DriverManager.getConnection(url, username, password);
     } catch (Exception e) {
       throw new IllegalStateException(e);

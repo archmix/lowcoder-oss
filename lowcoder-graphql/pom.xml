@@ -36,12 +36,6 @@
 
     <dependency>
       <groupId>org.archmix</groupId>
-      <artifactId>legolas-mysql</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
       <artifactId>legolas-postgresql</artifactId>
       <scope>test</scope>
     </dependency>

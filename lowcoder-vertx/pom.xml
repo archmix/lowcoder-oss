@@ -20,7 +20,17 @@
 
     <dependency>
       <groupId>io.vertx</groupId>
+      <artifactId>vertx-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.vertx</groupId>
       <artifactId>vertx-config-yaml</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web-client</artifactId>
     </dependency>
 
     <dependency>
@@ -35,21 +45,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.archmix</groupId>
-      <artifactId>legolas-mysql</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
-      <artifactId>legolas-postgresql</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
-      <artifactId>legolas-provided</artifactId>
-      <scope>test</scope>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
     </dependency>
   </dependencies>
 </project>

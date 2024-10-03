@@ -8,7 +8,9 @@ import java.sql.DatabaseMetaData;
 @RequiredArgsConstructor(staticName = "create")
 @Getter
 public class ForeignKey {
-  private final IndexName indexName;
+  private final String indexName;
+
+  private final String tableName;
 
   private final Column column;
 

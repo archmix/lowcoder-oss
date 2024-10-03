@@ -23,3 +23,10 @@ CREATE TABLE orders (
         ON DELETE CASCADE
         ON UPDATE RESTRICT
 );
+
+CREATE SEQUENCE auto_generation_id_seq;
+
+CREATE TABLE auto_generation_id (
+    id int NOT NULL DEFAULT nextval('auto_generation_id_seq'),
+    CONSTRAINT pk_auto_generation_id PRIMARY KEY (id)
+);

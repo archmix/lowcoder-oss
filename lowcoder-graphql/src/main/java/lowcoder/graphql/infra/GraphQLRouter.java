@@ -1,24 +1,28 @@
 package lowcoder.graphql.infra;
 
+import com.google.common.net.MediaType;
+import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.graphql.GraphiQLHandler;
 import io.vertx.ext.web.handler.graphql.GraphiQLHandlerOptions;
 import lowcoder.core.interfaces.RouterService;
 import lowcoder.core.interfaces.RouterServiceSpecification;
+import lowcoder.metadata.interfaces.Table;
+import lowcoder.sql.infra.ConnectionPool;
 
 @RouterServiceSpecification
 public class GraphQLRouter implements RouterService {
+  private GraphiQLHandler handler;
 
-    @Override
-    public void accept(Router router) {
-        router.route("/graphql").handler(context -> {
-            HttpServerResponse response = context.response();
-            response.putHeader("content-type", "text/plain");
-            response.end("Hello World from GraphQL!");
-        });
+  @Override
+  public void accept(Vertx vertx, Router router, ConnectionPool pool, Table table) {
+    GraphiQLHandlerOptions options = new GraphiQLHandlerOptions().setEnabled(true);
 
-        GraphiQLHandlerOptions options = new GraphiQLHandlerOptions().setEnabled(true);
-        router.route("/graphiql/*").handler(GraphiQLHandler.create(options));
-    }
+    GraphiQLHandler handler = GraphiQLHandler.builder(vertx)
+      .with(options)
+      .build();
+
+    router.route("/graphiql*").subRouter(handler.router());
+  }
 }

@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.archmix</groupId>
     <artifactId>java-parent</artifactId>
-    <version>1.8.2</version>
+    <version>1.11.0</version>
   </parent>
 
   <name>Lowcoder Open Source Solution</name>
@@ -18,19 +18,25 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>lowcoder-container</module>
     <module>lowcoder-core</module>
     <module>lowcoder-graphql</module>
     <module>lowcoder-openapi</module>
     <module>lowcoder-sql</module>
     <module>lowcoder-vertx</module>
+    <module>lowcoder-api</module>
+    <module>lowcoder-testsuite</module>
   </modules>
 
   <properties>
     <lowcoderVersion>0.0.1-SNAPSHOT</lowcoderVersion>
-    <legolasVersion>1.0.12</legolasVersion>
-    <vertxVersion>4.2.6</vertxVersion>
-    <hamcrestVersion>1.3</hamcrestVersion>
+    <legolasVersion>1.0.14</legolasVersion>
+    <compozitorVersion>0.1.17</compozitorVersion>
+    <vertxVersion>4.5.10</vertxVersion>
+    <junitJupiterVersion>5.9.1</junitJupiterVersion>
+
+    <agroalVersion>1.16</agroalVersion>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <restAssuredVersion>5.4.0</restAssuredVersion>
   </properties>
 
   <dependencyManagement>
@@ -38,7 +44,7 @@
       <!--LOWCODER -->
       <dependency>
         <groupId>org.archmix</groupId>
-        <artifactId>lowcoder-container</artifactId>
+        <artifactId>lowcoder-api</artifactId>
         <version>${lowcoderVersion}</version>
       </dependency>
 
@@ -68,6 +74,12 @@
 
       <dependency>
         <groupId>org.archmix</groupId>
+        <artifactId>lowcoder-testsuite</artifactId>
+        <version>${lowcoderVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.archmix</groupId>
         <artifactId>lowcoder-vertx</artifactId>
         <version>${lowcoderVersion}</version>
       </dependency>
@@ -81,20 +93,64 @@
         <scope>import</scope>
       </dependency>
 
+      <dependency>
+        <groupId>org.archmix</groupId>
+        <artifactId>compozitor-oss</artifactId>
+        <version>${compozitorVersion}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
       <!-- VERTX -->
       <dependency>
         <groupId>io.vertx</groupId>
-        <artifactId>vertx-dependencies</artifactId>
+        <artifactId>vertx-stack-depchain</artifactId>
         <version>${vertxVersion}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
 
       <dependency>
-        <groupId>org.hamcrest</groupId>
-        <artifactId>hamcrest-core</artifactId>
-        <version>${hamcrestVersion}</version>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>${junitJupiterVersion}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junitJupiterVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.rest-assured</groupId>
+        <artifactId>rest-assured</artifactId>
+        <version>${restAssuredVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>${sl4jVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.agroal</groupId>
+        <artifactId>agroal-api</artifactId>
+        <version>${agroalVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.agroal</groupId>
+        <artifactId>agroal-pool</artifactId>
+        <version>${agroalVersion}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+    </dependency>
+  </dependencies>
 </project>
