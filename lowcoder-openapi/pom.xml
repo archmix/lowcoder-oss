@@ -20,12 +20,6 @@
 
     <dependency>
       <groupId>org.archmix</groupId>
-      <artifactId>lowcoder-testsuite</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
       <artifactId>legolas-postgresql</artifactId>
       <scope>test</scope>
     </dependency>
@@ -48,8 +42,15 @@
     </dependency>
 
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>lowcoder-testsuite</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

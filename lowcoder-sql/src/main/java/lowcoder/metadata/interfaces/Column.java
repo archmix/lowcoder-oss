@@ -2,6 +2,7 @@ package lowcoder.metadata.interfaces;
 
 import io.vertx.core.buffer.Buffer;
 import io.vertx.sqlclient.Tuple;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -11,7 +12,8 @@ import java.time.ZoneId;
 import java.util.Optional;
 
 @RequiredArgsConstructor(staticName = "create")
-public class Column {
+@Builder
+public class Column implements Field {
   private final Table table;
 
   @Getter
@@ -305,7 +307,6 @@ public class Column {
       }
       if(value instanceof String) {
         tuple.addLocalDate(LocalDate.parse(value.toString()));
-        return;
       }
     }
 
@@ -326,5 +327,28 @@ public class Column {
   Boolean getGenerated() {
     Boolean defaultValue = this.constraints.ifConstraint(ConstraintType.DEFAULT).isPresent();
     return generated || autoIncrement || defaultValue;
+  }
+
+  public static class ColumnBuilder  {
+    private Table.TableBuilder root;
+
+    ColumnBuilder root(Table.TableBuilder root) {
+      this.root = root;
+      return this;
+    }
+
+    public Table.TableBuilder add() {
+      return this.root.add(this.build());
+    }
+
+    public Table.TableBuilder asPrimaryKey(String indexName) {
+      var primaryKey = PrimaryKey.create(indexName, this.build());
+      this.root.add(primaryKey);
+      return this.root;
+    }
+
+    public ForeignKey.ForeignKeyBuilder asForeignKey(String indexName) {
+      return ForeignKey.builder().root(this.root).column(this.build());
+    }
   }
 }

@@ -6,25 +6,16 @@ import lowcoder.metadata.infra.DatabaseMetadata;
 import legolas.config.api.interfaces.Configuration;
 import legolas.postgre.interfaces.PostgreSQLEntry;
 import legolas.postgre.interfaces.PostgreSQLServiceId;
-import legolas.runtime.core.interfaces.RunningEnvironment;
-import legolas.runtime.core.interfaces.RuntimeEnvironment;
 import lowcoder.metadata.interfaces.*;
+import lowcoder.core.application.EnvironmentLowcoderTest;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Optional;
-import java.util.concurrent.Executors;
 
-public class DatabaseMetadataTest {
-  private static RunningEnvironment environment;
-
-  @BeforeClass
-  public static void create() {
-    environment = RuntimeEnvironment.TEST.start(Executors.newSingleThreadExecutor()).get();
-  }
+public class DatabaseMetadataTest extends EnvironmentLowcoderTest {
 
   @Test
   public void givenPostgresWithTablesWhenGetTablesThenReturns() {
@@ -105,7 +96,7 @@ public class DatabaseMetadataTest {
     Assert.assertEquals(personId.getColumn().getType(), Column.ColumnType.INTEGER);
 
     Assert.assertEquals(personId.getTableName(), "persons");
-    Assert.assertEquals(personId.getColumn().getName(), "id");
+    Assert.assertEquals(personId.getColumn().getName(), "person_id");
     Assert.assertEquals(personId.getIndexName(), "fk_person_order");
     Assert.assertTrue(isRestrictOrNoAction(personId.getOnDelete()));
     Assert.assertEquals(ForeignKey.Rule.SET_NULL, personId.getOnUpdate());
@@ -114,10 +105,10 @@ public class DatabaseMetadataTest {
     Assert.assertEquals(personId2.getColumn().getType(), Column.ColumnType.INTEGER);
 
     Assert.assertEquals(personId2.getTableName(), "persons");
-    Assert.assertEquals(personId2.getColumn().getName(), "id");
+    Assert.assertEquals(personId2.getColumn().getName(), "person_id2");
     Assert.assertEquals(personId2.getIndexName(), "fk_person_order2");
     Assert.assertEquals(ForeignKey.Rule.CASCADE, personId2.getOnDelete());
-    Assert.assertTrue(isRestrictOrNoAction(personId2.getOnDelete()));
+    Assert.assertTrue(isRestrictOrNoAction(personId2.getOnUpdate()));
   }
 
   private boolean isRestrictOrNoAction(ForeignKey.Rule rule){

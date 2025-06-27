@@ -1,10 +1,9 @@
 package lowcoder.metadata.infra;
 
+import lombok.extern.slf4j.Slf4j;
 import lowcoder.metadata.interfaces.*;
 import lowcoder.metadata.interfaces.ForeignKey.Rule;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,9 +14,8 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @RequiredArgsConstructor(staticName = "create")
+@Slf4j
 public class DatabaseMetadata {
-  private final Logger logger = LoggerFactory.getLogger(DatabaseMetadata.class);
-
   private final Connection connection;
 
   public static enum ObjectType {
@@ -67,7 +65,7 @@ public class DatabaseMetadata {
         consumer.accept(table);
       }
     } catch (SQLException e) {
-      logger.error("Could not retrieve data", e);
+      log.error("Could not retrieve data", e);
       throw new RuntimeException(e);
     }
   }
@@ -91,7 +89,7 @@ public class DatabaseMetadata {
         table.add(column);
       }
     } catch (SQLException e) {
-      logger.error("Could not retrieve data", e);
+      log.error("Could not retrieve data", e);
       throw new RuntimeException(e);
     }
   }
@@ -117,7 +115,7 @@ public class DatabaseMetadata {
         });
       }
     } catch (SQLException e) {
-      logger.error("Could not retrieve data", e);
+      log.error("Could not retrieve data", e);
       throw new RuntimeException(e);
     }
   }
@@ -132,7 +130,7 @@ public class DatabaseMetadata {
         table.add(primaryKey);
       }
     } catch (SQLException e) {
-      logger.error("Could not retrieve data", e);
+      log.error("Could not retrieve data", e);
       throw new RuntimeException(e);
     }
   }
@@ -153,7 +151,7 @@ public class DatabaseMetadata {
         });
       }
     } catch (SQLException e) {
-      logger.error("Could not retrieve data", e);
+      log.error("Could not retrieve data", e);
       throw new RuntimeException(e);
     }
   }

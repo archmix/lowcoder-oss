@@ -1,5 +1,6 @@
 package lowcoder.metadata.interfaces;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -7,7 +8,8 @@ import java.sql.DatabaseMetaData;
 
 @RequiredArgsConstructor(staticName = "create")
 @Getter
-public class ForeignKey {
+@Builder
+public class ForeignKey implements Field {
   private final String indexName;
 
   private final String tableName;
@@ -47,6 +49,28 @@ public class ForeignKey {
       }
 
       throw new RuntimeException(String.format("Invalid value for Foreign Key Rule %d", value));
+    }
+  }
+
+  public String getName() {
+    return this.column.getName();
+  }
+
+  public static class ForeignKeyBuilder  {
+    private Table.TableBuilder root;
+    private Column column;
+
+    ForeignKeyBuilder root(Table.TableBuilder root) {
+      this.root = root;
+      return this;
+    }
+
+    public Table.TableBuilder add() {
+      return this.root.add(this.build());
+    }
+
+    public ForeignKey build() {
+      return new ForeignKey(this.indexName, this.tableName, this.column, this.onUpdate, this.onDelete);
     }
   }
 }

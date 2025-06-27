@@ -41,7 +41,7 @@ public class ResourceLoader {
     public void openFileBuffer(String path, PromiseHandler<Buffer> handler) {
         File file = new File(path);
         if (file.exists()) {
-            fileSystem.readFile(path, handler);
+            fileSystem.readFile(path).onComplete(handler);
             return;
         }
 

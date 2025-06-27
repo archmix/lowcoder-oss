@@ -30,13 +30,15 @@
   <properties>
     <lowcoderVersion>0.0.1-SNAPSHOT</lowcoderVersion>
     <legolasVersion>1.0.14</legolasVersion>
-    <compozitorVersion>0.1.17</compozitorVersion>
-    <vertxVersion>4.5.10</vertxVersion>
+    <compozitorVersion>0.1.19-SNAPSHOT</compozitorVersion>
+    <vertxVersion>4.5.20</vertxVersion>
     <junitJupiterVersion>5.9.1</junitJupiterVersion>
 
     <agroalVersion>1.16</agroalVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <restAssuredVersion>5.4.0</restAssuredVersion>
+    <hamcrestVersion>2.2</hamcrestVersion>
+    <javaUUIDGeneratorVersion>5.1.0</javaUUIDGeneratorVersion>
   </properties>
 
   <dependencyManagement>
@@ -84,19 +86,19 @@
         <version>${lowcoderVersion}</version>
       </dependency>
 
+      <dependency>
+        <groupId>org.archmix</groupId>
+        <artifactId>compozitor-oss</artifactId>
+        <version>${compozitorVersion}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
       <!-- LEGOLAS -->
       <dependency>
         <groupId>org.archmix</groupId>
         <artifactId>legolas-oss</artifactId>
         <version>${legolasVersion}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>org.archmix</groupId>
-        <artifactId>compozitor-oss</artifactId>
-        <version>${compozitorVersion}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -128,6 +130,12 @@
       </dependency>
 
       <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest</artifactId>
+        <version>${hamcrestVersion}</version>
+      </dependency>
+
+      <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-simple</artifactId>
         <version>${sl4jVersion}</version>
@@ -143,6 +151,12 @@
         <groupId>io.agroal</groupId>
         <artifactId>agroal-pool</artifactId>
         <version>${agroalVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.uuid</groupId>
+        <artifactId>java-uuid-generator</artifactId>
+        <version>${javaUUIDGeneratorVersion}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

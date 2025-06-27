@@ -17,10 +17,11 @@ public class FileAssertion {
   public static FileAssertion file(String path) {
     String resourcePath = path;
     if (!path.startsWith("/")) {
-      resourcePath = new StringBuilder("/").append(path).toString();
+      resourcePath = "/" + path;
     }
 
     try (InputStream resourceFile = FileAssertion.class.getResourceAsStream(resourcePath)) {
+      assert resourceFile != null;
       String content = CharStreams.toString(new InputStreamReader(resourceFile));
       return new FileAssertion(content);
     } catch (IOException e) {

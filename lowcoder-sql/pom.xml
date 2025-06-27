@@ -24,6 +24,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>lowcoder-testsuite</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <scope>provided</scope>
@@ -32,21 +38,6 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-jdbc-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.agroal</groupId>
-      <artifactId>agroal-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.agroal</groupId>
-      <artifactId>agroal-pool</artifactId>
     </dependency>
 
     <dependency>

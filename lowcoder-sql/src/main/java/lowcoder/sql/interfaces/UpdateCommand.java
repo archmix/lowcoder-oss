@@ -9,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import lowcoder.metadata.interfaces.Column;
 import lowcoder.metadata.interfaces.PrimaryKey;
 import lowcoder.metadata.interfaces.Table;
+import lowcoder.sql.infra.SQLCache;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,26 +19,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(staticName = "create")
 @Slf4j
 public class UpdateCommand {
-  private final SQLGenerator sqlGenerator = SQLGenerator.create();
   private final JDBCPool pool;
   private final Table table;
 
   public void execute(JsonObject json, Handler<Void> onSuccess, Handler<Throwable> onFail) {
-    Collection<Column> columns = table.getColumns().stream().filter(column -> json.containsKey(column.getName())).collect(Collectors.toList());
-    Collection<PrimaryKey> pkColumns = table.getPrimaryKeys();
+    var columns = table.getColumns().stream().filter(column -> json.containsKey(column.getName())).collect(Collectors.toList());
 
-    List<String> columnNames = columns.stream().map(Column::getName).collect(Collectors.toList());
-
-    List<String> pkColumnNames = pkColumns.stream().map(pk -> pk.getColumn().getName()).collect(Collectors.toList());
-
-    String sql = this.sqlGenerator.updateSQL(table.getName(), columnNames, pkColumnNames);
+    String sql = this.toSQL(table, columns);
     log.debug("SQL generated for table {} is {}", table.getName(), sql);
 
     Tuple values = Tuple.tuple();
     columns.forEach(column -> {
       column.getType().setValue(values, json.getValue(column.getName()));
     });
-    pkColumns.forEach(pk -> {
+    table.getPrimaryKeys().forEach(pk -> {
       pk.getColumn().getType().setValue(values, json.getValue(pk.getColumn().getName()));
     });
 
@@ -47,5 +43,17 @@ public class UpdateCommand {
       }
       onSuccess.handle(null);
     }).onFailure(onFail);
+  }
+
+  private String toSQL(Table table, Collection<Column> columns) {
+    var comma_collector = Collectors.joining(",");
+
+    String updateTemplate = "UPDATE {0} SET {1} WHERE 1 = 1 {2}";
+    String columnSet = columns.stream().map(SetExpression.of()).collect(comma_collector);
+
+    var space_joining = Collectors.joining(" ");
+    var whereClause = table.getPrimaryKeys().stream().map(AndClause.of()).collect(space_joining);
+
+    return MessageFormat.format(updateTemplate, table.getName(), columnSet, whereClause);
   }
 }
