@@ -1,6 +1,5 @@
 package lowcoder.core.infra;
 
-import com.google.common.collect.Sets;
 import compozitor.processor.core.interfaces.Processor;
 import compozitor.processor.core.interfaces.ServiceProcessor;
 import lowcoder.core.interfaces.RouterService;
@@ -18,6 +17,6 @@ public class RouterServiceProcessor extends ServiceProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return Sets.newHashSet(RouterServiceSpecification.class.getName());
+        return Set.of(RouterServiceSpecification.class.getName());
     }
 }

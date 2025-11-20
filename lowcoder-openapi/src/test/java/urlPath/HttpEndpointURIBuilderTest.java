@@ -1,6 +1,6 @@
 package urlPath;
 
-import lowcoder.openapi.infra.HttpEndpointURIBuilder;
+import lowcoder.api.infra.HttpEndpointURIBuilder;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 

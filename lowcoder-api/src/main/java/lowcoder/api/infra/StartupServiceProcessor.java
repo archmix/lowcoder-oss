@@ -1,6 +1,5 @@
 package lowcoder.api.infra;
 
-import com.google.common.collect.Sets;
 import compozitor.processor.core.interfaces.Processor;
 import compozitor.processor.core.interfaces.ServiceProcessor;
 import lowcoder.api.interfaces.StartupService;
@@ -18,6 +17,6 @@ public class StartupServiceProcessor extends ServiceProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return Sets.newHashSet(StartupServiceSpecification.class.getName());
+        return Set.of(StartupServiceSpecification.class.getName());
     }
 }

@@ -3,7 +3,7 @@ package lowcoder.sql.interfaces;
 import io.vertx.sqlclient.Tuple;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lowcoder.metadata.interfaces.Column;
+import morphos.api.interfaces.Column;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -80,7 +80,7 @@ public class FilterOptions {
 
     public void setValue(Tuple tuple){
       if(predicate == Predicate.IN) {
-        ((Collection<String>) value).forEach(value -> column.getType().setValue(tuple, value));
+        ((Collection<String>) value).forEach(value -> TupleValue.setValue(tuple,column, value));
         return;
       }
 
@@ -88,7 +88,7 @@ public class FilterOptions {
         return;
       }
 
-      column.getType().setValue(tuple, value);
+      TupleValue.setValue(tuple, column, value);
     }
   }
 

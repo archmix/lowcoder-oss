@@ -1,6 +1,6 @@
 package lowcoder.sql.interfaces;
 
-import lowcoder.metadata.interfaces.Field;
+import morphos.api.interfaces.Field;
 
 import java.util.function.Function;
 

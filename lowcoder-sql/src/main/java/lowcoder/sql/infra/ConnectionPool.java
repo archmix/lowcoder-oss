@@ -8,9 +8,9 @@ import io.vertx.sqlclient.PoolOptions;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lowcoder.api.infra.ConfigEntries;
+import lowcoder.api.infra.LowcoderConfig;
 import lowcoder.api.interfaces.JDBCPoolConsumer;
-import lowcoder.metadata.interfaces.Table;
+import morphos.api.interfaces.Table;
 import lowcoder.sql.interfaces.InsertCommand;
 import lowcoder.sql.interfaces.SelectCommand;
 import lowcoder.sql.interfaces.UpdateCommand;
@@ -27,17 +27,17 @@ public class ConnectionPool {
   public static ConnectionPool create(Vertx vertx, JsonObject config) {
     var pool = JDBCPool.pool(vertx,
       new JDBCConnectOptions()
-        .setJdbcUrl(ConfigEntries.Database.getUrl(config))
-        .setUser(ConfigEntries.Database.getUser(config))
-        .setPassword(ConfigEntries.Database.getPassword(config)),
+        .setJdbcUrl(LowcoderConfig.Database.getUrl(config))
+        .setUser(LowcoderConfig.Database.getUser(config))
+        .setPassword(LowcoderConfig.Database.getPassword(config)),
       new PoolOptions()
-        .setMaxSize(ConfigEntries.ConnectionPool.getMaxSize(config))
+        .setMaxSize(LowcoderConfig.ConnectionPool.getMaxSize(config))
         .setName("lowcoder-pool")
     );
 
     ServiceLoader.load(JDBCPoolConsumer.class).forEach(visitor -> visitor.accept(pool));
 
-    return new ConnectionPool(pool, PaginationType.from(ConfigEntries.Database.getUrl(config)));
+    return new ConnectionPool(pool, PaginationType.from(LowcoderConfig.Database.getUrl(config)));
   }
 
   public InsertCommand insertCommand(Table table) {

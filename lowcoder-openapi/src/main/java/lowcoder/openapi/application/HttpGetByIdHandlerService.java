@@ -1,17 +1,17 @@
 package lowcoder.openapi.application;
 
-import com.google.common.net.MediaType;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
 import lowcoder.core.interfaces.HttpHandlerService;
 import lowcoder.core.interfaces.HttpHandlerServiceSpecification;
-import lowcoder.metadata.interfaces.Table;
-import lowcoder.openapi.infra.HttpEndpointURIBuilder;
+import lowcoder.api.infra.HttpEndpointURIBuilder;
+import lowcoder.openapi.infra.MimeType;
 import lowcoder.openapi.interfaces.AbstractHttpHandler;
 import lowcoder.sql.infra.ConnectionPool;
 import lowcoder.sql.interfaces.SearchOptions;
+import morphos.api.interfaces.Table;
 
 @Slf4j
 @HttpHandlerServiceSpecification
@@ -28,7 +28,7 @@ public class HttpGetByIdHandlerService implements HttpHandlerService {
     log.info("Registering GET handler for table {} at {}", table.getName(), uri);
 
     router.route(HttpMethod.GET, uri)
-      .produces(MediaType.JSON_UTF_8.withoutParameters().toString())
+      .produces(MimeType.JSON)
       .handler(instance);
   }
 

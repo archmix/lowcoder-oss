@@ -1,6 +1,6 @@
 package lowcoder.sql.interfaces;
 
-import lowcoder.metadata.interfaces.Table;
+import morphos.api.interfaces.Table;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

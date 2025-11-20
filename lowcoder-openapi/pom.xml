@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.archmix</groupId>
     <artifactId>lowcoder-oss</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>lowcoder-openapi</artifactId>
@@ -16,18 +16,6 @@
     <dependency>
       <groupId>org.archmix</groupId>
       <artifactId>lowcoder-core</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
-      <artifactId>legolas-postgresql</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
-      <artifactId>legolas-provided</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -49,7 +37,7 @@
 
     <dependency>
       <groupId>org.archmix</groupId>
-      <artifactId>lowcoder-testsuite</artifactId>
+      <artifactId>lowcoder-testing</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

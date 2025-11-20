@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.archmix</groupId>
     <artifactId>lowcoder-oss</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>lowcoder-api</artifactId>
@@ -15,6 +15,11 @@
     <dependency>
       <groupId>org.archmix</groupId>
       <artifactId>lowcoder-vertx</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.archmix</groupId>
+      <artifactId>morphos-api</artifactId>
     </dependency>
 
     <dependency>
@@ -32,6 +37,15 @@
       <groupId>org.archmix</groupId>
       <artifactId>legolas-provided</artifactId>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
     </dependency>
   </dependencies>
 </project>

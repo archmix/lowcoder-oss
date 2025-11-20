@@ -1,15 +1,12 @@
 package lowcoder.openapi.interfaces;
 
-import com.google.common.net.MediaType;
-import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lowcoder.openapi.infra.MimeType;
 
-import java.util.UUID;
-
-import static lowcoder.core.application.LowcoderStarter.*;
+import static lowcoder.core.application.LowcoderContainerService.*;
 
 @Slf4j
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
@@ -26,7 +23,7 @@ class HttpErrorResponse {
 
     context.response()
       .setStatusCode(500)
-      .putHeader("Content-type", MediaType.JSON_UTF_8.toString())
+      .putHeader("Content-type", MimeType.JSON)
       .end(responseBody.toBuffer());
   }
 }

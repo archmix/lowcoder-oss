@@ -2,7 +2,7 @@ package lowcoder.openapi.application;
 
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
-import lowcoder.metadata.interfaces.Table;
+import morphos.api.interfaces.Table;
 
 public class LoadIdFromContext {
   private static LoadIdFromContext instance = new LoadIdFromContext();

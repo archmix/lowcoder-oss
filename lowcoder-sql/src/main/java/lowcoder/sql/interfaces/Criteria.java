@@ -1,7 +1,7 @@
 package lowcoder.sql.interfaces;
 
 import lombok.RequiredArgsConstructor;
-import lowcoder.metadata.interfaces.Column;
+import morphos.api.interfaces.Column;
 
 import java.util.Collection;
 

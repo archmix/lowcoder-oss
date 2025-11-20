@@ -7,14 +7,14 @@
   <parent>
     <groupId>org.archmix</groupId>
     <artifactId>java-parent</artifactId>
-    <version>1.11.0</version>
+    <version>1.11.1</version>
   </parent>
 
   <name>Lowcoder Open Source Solution</name>
   <description>Lowcoder is a low code backend solution for publishing a REST or GraphQL API based on a database.</description>
 
   <artifactId>lowcoder-oss</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <modules>
@@ -24,16 +24,17 @@
     <module>lowcoder-sql</module>
     <module>lowcoder-vertx</module>
     <module>lowcoder-api</module>
-    <module>lowcoder-testsuite</module>
+    <module>lowcoder-testing</module>
   </modules>
 
   <properties>
-    <lowcoderVersion>0.0.1-SNAPSHOT</lowcoderVersion>
-    <legolasVersion>1.0.14</legolasVersion>
-    <compozitorVersion>0.1.19-SNAPSHOT</compozitorVersion>
-    <vertxVersion>4.5.20</vertxVersion>
-    <junitJupiterVersion>5.9.1</junitJupiterVersion>
+    <lowcoderVersion>0.1.0-SNAPSHOT</lowcoderVersion>
+    <legolasVersion>1.0.15</legolasVersion>
+    <compozitorVersion>0.1.19</compozitorVersion>
+    <spectraVersion>0.1.0</spectraVersion>
+    <morphosVersion>0.1.0</morphosVersion>
 
+    <vertxVersion>4.5.21</vertxVersion>
     <agroalVersion>1.16</agroalVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <restAssuredVersion>5.4.0</restAssuredVersion>
@@ -76,7 +77,7 @@
 
       <dependency>
         <groupId>org.archmix</groupId>
-        <artifactId>lowcoder-testsuite</artifactId>
+        <artifactId>lowcoder-testing</artifactId>
         <version>${lowcoderVersion}</version>
       </dependency>
 
@@ -86,6 +87,7 @@
         <version>${lowcoderVersion}</version>
       </dependency>
 
+      <!-- COMPOZITOR -->
       <dependency>
         <groupId>org.archmix</groupId>
         <artifactId>compozitor-oss</artifactId>
@@ -103,6 +105,22 @@
         <scope>import</scope>
       </dependency>
 
+      <!-- MORPHOS -->
+      <dependency>
+        <groupId>org.archmix</groupId>
+        <artifactId>morphos-oss</artifactId>
+        <version>${morphosVersion}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- SPECTRA -->
+      <dependency>
+        <groupId>org.archmix</groupId>
+        <artifactId>spectra-oss</artifactId>
+        <version>${spectraVersion}</version>
+      </dependency>
+
       <!-- VERTX -->
       <dependency>
         <groupId>io.vertx</groupId>
@@ -113,32 +131,9 @@
       </dependency>
 
       <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-api</artifactId>
-        <version>${junitJupiterVersion}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-engine</artifactId>
-        <version>${junitJupiterVersion}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>io.rest-assured</groupId>
-        <artifactId>rest-assured</artifactId>
-        <version>${restAssuredVersion}</version>
-      </dependency>
-
-      <dependency>
         <groupId>org.hamcrest</groupId>
         <artifactId>hamcrest</artifactId>
         <version>${hamcrestVersion}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-simple</artifactId>
-        <version>${sl4jVersion}</version>
       </dependency>
 
       <dependency>
@@ -154,17 +149,10 @@
       </dependency>
 
       <dependency>
-        <groupId>com.fasterxml.uuid</groupId>
-        <artifactId>java-uuid-generator</artifactId>
-        <version>${javaUUIDGeneratorVersion}</version>
+        <groupId>io.rest-assured</groupId>
+        <artifactId>rest-assured</artifactId>
+        <version>${restAssuredVersion}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-    </dependency>
-  </dependencies>
 </project>

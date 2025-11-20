@@ -3,40 +3,36 @@ package lowcoder.sql.interfaces;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.jdbcclient.JDBCPool;
-import io.vertx.sqlclient.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lowcoder.metadata.interfaces.Column;
-import lowcoder.metadata.interfaces.PrimaryKey;
-import lowcoder.metadata.interfaces.Table;
-import lowcoder.sql.infra.SQLCache;
+import morphos.api.interfaces.Column;
+import morphos.api.interfaces.Table;
 
 import java.text.MessageFormat;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor(staticName = "create")
 @Slf4j
-public class UpdateCommand {
+public class UpdateCommand extends ColumnCommand {
   private final JDBCPool pool;
   private final Table table;
 
   public void execute(JsonObject json, Handler<Void> onSuccess, Handler<Throwable> onFail) {
-    var columns = table.getColumns().stream().filter(column -> json.containsKey(column.getName())).collect(Collectors.toList());
+    var columns = columnsForUpdate(table).stream().filter(column -> json.containsKey(column.getName())).collect(Collectors.toList());
 
-    String sql = this.toSQL(table, columns);
+    String sql = this.toSQL(columns);
     log.debug("SQL generated for table {} is {}", table.getName(), sql);
 
-    Tuple values = Tuple.tuple();
+    TupleBuilder values = TupleBuilder.of();
     columns.forEach(column -> {
-      column.getType().setValue(values, json.getValue(column.getName()));
+      values.add(column, json.getValue(column.getName()));
     });
     table.getPrimaryKeys().forEach(pk -> {
-      pk.getColumn().getType().setValue(values, json.getValue(pk.getColumn().getName()));
+      values.add(pk.getColumn(), json.getValue(pk.getName()));
     });
 
-    this.pool.preparedQuery(sql).execute(values).onSuccess(rows ->{
+    this.pool.preparedQuery(sql).execute(values.build()).onSuccess(rows ->{
       if(rows.rowCount() <= 0) {
         onFail.handle(new RuntimeException("Expected 1 row to be updated, but got " + rows.size()));
         return;
@@ -45,7 +41,7 @@ public class UpdateCommand {
     }).onFailure(onFail);
   }
 
-  private String toSQL(Table table, Collection<Column> columns) {
+  private String toSQL(Collection<Column> columns) {
     var comma_collector = Collectors.joining(",");
 
     String updateTemplate = "UPDATE {0} SET {1} WHERE 1 = 1 {2}";

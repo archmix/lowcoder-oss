@@ -2,12 +2,10 @@ package lowcoder.sql.infra;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.shareddata.LocalMap;
-import lowcoder.metadata.interfaces.Table;
+import morphos.api.interfaces.Table;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
 
 public class SQLCache {
   private static final SQLCache INSTANCE = new SQLCache();

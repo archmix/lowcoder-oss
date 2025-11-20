@@ -1,6 +1,5 @@
 package lowcoder.api.infra;
 
-import com.google.common.collect.Sets;
 import compozitor.processor.core.interfaces.Processor;
 import compozitor.processor.core.interfaces.ServiceProcessor;
 import lowcoder.api.interfaces.ContainerService;
@@ -18,6 +17,6 @@ public class ContainerServiceProcessor extends ServiceProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return Sets.newHashSet(ContainerServiceSpecification.class.getName());
+        return Set.of(ContainerServiceSpecification.class.getName());
     }
 }

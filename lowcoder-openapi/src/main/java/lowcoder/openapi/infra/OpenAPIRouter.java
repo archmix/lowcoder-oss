@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import lowcoder.core.interfaces.HttpHandlerService;
 import lowcoder.core.interfaces.RouterService;
 import lowcoder.core.interfaces.RouterServiceSpecification;
-import lowcoder.metadata.interfaces.Table;
+import morphos.api.interfaces.Table;
 import lowcoder.promise.interfaces.FuturePromise;
 import lowcoder.sql.infra.ConnectionPool;
 

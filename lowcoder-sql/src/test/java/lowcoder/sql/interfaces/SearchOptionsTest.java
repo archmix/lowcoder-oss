@@ -1,6 +1,6 @@
 package lowcoder.sql.interfaces;
 
-import lowcoder.metadata.interfaces.Table;
+import morphos.api.interfaces.Table;
 import lowcoder.sql.infra.PaginationType;
 import lowcoder.testsuite.infra.RoutingContextMockBuilder;
 import org.junit.jupiter.api.Test;

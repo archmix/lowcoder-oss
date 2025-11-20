@@ -1,14 +1,12 @@
 package lowcoder.graphql.infra;
 
-import com.google.common.net.MediaType;
 import io.vertx.core.Vertx;
-import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.graphql.GraphiQLHandler;
 import io.vertx.ext.web.handler.graphql.GraphiQLHandlerOptions;
 import lowcoder.core.interfaces.RouterService;
 import lowcoder.core.interfaces.RouterServiceSpecification;
-import lowcoder.metadata.interfaces.Table;
+import morphos.api.interfaces.Table;
 import lowcoder.promise.interfaces.FuturePromise;
 import lowcoder.sql.infra.ConnectionPool;
 

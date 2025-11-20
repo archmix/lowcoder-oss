@@ -4,10 +4,10 @@ import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lowcoder.metadata.interfaces.Table;
+import morphos.api.interfaces.Table;
 import lowcoder.sql.infra.ConnectionPool;
 
-import static lowcoder.core.application.LowcoderStarter.*;
+import static lowcoder.core.application.LowcoderContainerService.*;
 
 @RequiredArgsConstructor
 @Slf4j

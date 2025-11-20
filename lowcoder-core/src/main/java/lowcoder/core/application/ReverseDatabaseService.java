@@ -2,18 +2,18 @@ package lowcoder.core.application;
 
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import lombok.extern.slf4j.Slf4j;
-import lowcoder.api.infra.ConfigEntries;
-import lowcoder.metadata.infra.TableCache;
+import lowcoder.api.infra.LowcoderConfig;
 import lowcoder.core.interfaces.RouterService;
-import lowcoder.metadata.infra.DatabaseMetadata;
-import lowcoder.metadata.interfaces.DatabaseCatalog;
-import lowcoder.metadata.interfaces.DatabaseSchema;
 import lowcoder.promise.interfaces.FuturePromise;
 import lowcoder.promise.interfaces.PromiseHandler;
 import lowcoder.promise.interfaces.Promises;
 import lowcoder.sql.infra.ConnectionPool;
+import lowcoder.sql.infra.TableCache;
+import morphos.api.interfaces.MorphosReflector;
+import morphos.api.interfaces.Schema;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,13 +21,10 @@ import java.util.ServiceLoader;
 
 @Slf4j
 public class ReverseDatabaseService {
-  private final TableCache tableCache;
-
   private final ConnectionPool pool;
 
   private ReverseDatabaseService(ConnectionPool pool) {
     this.pool = pool;
-    this.tableCache = TableCache.of();
   }
 
   public static ReverseDatabaseService create(ConnectionPool pool) {
@@ -49,11 +46,14 @@ public class ReverseDatabaseService {
 
   private void doReverse(Vertx vertx, Router router, Connection connection, FuturePromise<Void> promise){
     log.info("Reversing database...");
-    DatabaseMetadata.create(connection).loadTables(DatabaseCatalog.empty(), DatabaseSchema.create("public"), this.tableCache::add);
+    var schemaName = LowcoderConfig.Database.getSchema(config(vertx));
+
+    var morphosCache = MorphosReflector.reflect(connection, Schema.of(schemaName));
 
     Promises promises = Promises.promises();
 
-    this.tableCache.stream().forEach(table -> {
+    morphosCache.tables().forEach(table -> {
+      TableCache.of().add(table);
       ServiceLoader.load(RouterService.class).forEach(service -> {
         log.info("Registering router service {} for table {}", service.getClass().getName(), table.getName());
         service.accept(vertx, router, pool, table, promises.add());
@@ -66,18 +66,22 @@ public class ReverseDatabaseService {
   }
 
   private void openConnection(Vertx vertx, PromiseHandler<Connection> handler){
-    var config = vertx.getOrCreateContext().config();
+    var config = config(vertx);
 
     try {
 
-      String url = ConfigEntries.Database.getUrl(config);
-      String username = ConfigEntries.Database.getUser(config);
-      String password = ConfigEntries.Database.getPassword(config);
+      String url = LowcoderConfig.Database.getUrl(config);
+      String username = LowcoderConfig.Database.getUser(config);
+      String password = LowcoderConfig.Database.getPassword(config);
 
       handler.handle(Future.succeededFuture(DriverManager.getConnection(url, username, password)));
     } catch (Exception e) {
       handler.handle(Future.failedFuture(e));
     }
+  }
+
+  private JsonObject config(Vertx vertx) {
+    return vertx.getOrCreateContext().config();
   }
 
   private void close(Connection connection){

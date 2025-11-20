@@ -1,6 +1,6 @@
 package lowcoder.sql.interfaces;
 
-import io.vertx.core.json.Json;
+import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
@@ -8,14 +8,13 @@ import io.vertx.sqlclient.Row;
 import io.vertx.sqlclient.RowSet;
 import io.vertx.sqlclient.Tuple;
 import lombok.RequiredArgsConstructor;
-import lowcoder.metadata.infra.TableCache;
-import lowcoder.metadata.interfaces.Column;
-import lowcoder.metadata.interfaces.ForeignKey;
-import lowcoder.metadata.interfaces.PrimaryKey;
-import lowcoder.metadata.interfaces.Table;
+import lowcoder.sql.infra.TableCache;
+import morphos.api.interfaces.Column;
+import morphos.api.interfaces.ForeignKey;
+import morphos.api.interfaces.PrimaryKey;
+import morphos.api.interfaces.Table;
 import lowcoder.sql.infra.PaginationType;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -52,12 +51,20 @@ public class SearchOptions {
     public String value() {
       return this.value;
     }
+
+    public String get(MultiMap params) {
+      return params.get(this.value);
+    }
+
+    public Collection<String> getAll(MultiMap params) {
+      return params.getAll(this.value);
+    }
   }
 
   public void from(RoutingContext context) {
     var params = context.request().params();
-    setColumns(params.getAll(SearchParameters.FIELDS.value()));
-    setExpand(params.get(SearchParameters.EXPAND.value()));
+    setColumns(SearchParameters.FIELDS.getAll(params));
+    setExpand(SearchParameters.EXPAND.get(params));
 
     this.table.getPrimaryKeys().stream().findFirst().ifPresent(pk -> {
       String name = pk.getColumn().getName();
@@ -65,29 +72,29 @@ public class SearchOptions {
     });
 
     for(String key : params.names()) {
-      if(key.equals("expand")) {
+      if(SearchParameters.EXPAND.value().equals(key)) {
         continue;
       }
-      if(key.equals("limit")) {
+      if(SearchParameters.LIMIT.value().equals(key)) {
         this.pagination.setLimit(Integer.parseInt(params.get(key)));
         continue;
       }
-      if(key.equals("offset")) {
+      if(SearchParameters.OFFSET.value().equals(key)) {
         this.pagination.setOffset(Integer.parseInt(params.get(key)));
         continue;
       }
-      if(key.equals("sort")) {
+      if(SearchParameters.SORT.value().equals(key)) {
         this.sort = Optional.of(SortOptions.of(params.get(key)));
         continue;
       }
-      if(key.equals("_or")) {
+      if(SearchParameters.OR.value().equals(key)) {
         continue;
       }
 
       this.addFilter(key, params.getAll(key), this.filter.and());
     }
 
-    var orParam = params.get("_or");
+    var orParam = SearchParameters.OR.get(params);
     if(orParam != null) {
       for(String param : List.of(orParam.split(","))){
         if(param.contains(":")) {

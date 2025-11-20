@@ -1,6 +1,5 @@
 package lowcoder.openapi.application;
 
-import com.google.common.net.MediaType;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
@@ -8,8 +7,9 @@ import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
 import lowcoder.core.interfaces.HttpHandlerService;
 import lowcoder.core.interfaces.HttpHandlerServiceSpecification;
-import lowcoder.metadata.interfaces.Table;
-import lowcoder.openapi.infra.HttpEndpointURIBuilder;
+import morphos.api.interfaces.Table;
+import lowcoder.api.infra.HttpEndpointURIBuilder;
+import lowcoder.openapi.infra.MimeType;
 import lowcoder.openapi.interfaces.AbstractHttpHandler;
 import lowcoder.sql.infra.ConnectionPool;
 
@@ -27,7 +27,7 @@ public class HttpPutHandlerService implements HttpHandlerService {
     log.info("Registering PUT handler for table {} at {}", table.getName(), uri);
 
     router.route(HttpMethod.PUT, uri)
-      .consumes(MediaType.JSON_UTF_8.withoutParameters().toString())
+      .consumes(MimeType.JSON)
       .handler(instance);
   }
 
