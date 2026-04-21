@@ -6,7 +6,6 @@ import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
 import lowcoder.core.interfaces.HttpHandlerService;
 import lowcoder.core.interfaces.HttpHandlerServiceSpecification;
-import lowcoder.api.infra.HttpEndpointURIBuilder;
 import lowcoder.openapi.infra.MimeType;
 import lowcoder.openapi.interfaces.AbstractHttpHandler;
 import lowcoder.sql.infra.ConnectionPool;
@@ -20,16 +19,14 @@ public class HttpGetByIdHandlerService implements HttpHandlerService {
   public void accept(Router router, ConnectionPool pool, Table table) {
     HttpGetByIdHandler instance = new HttpGetByIdHandler(pool, table);
 
-    if (table.getPrimaryKeys().isEmpty()) {
-      return;
-    }
+    table.hasPrimaryKeys(pks -> {
+      String uri = uri(table);
+      log.info("Registering GET handler for table {} at {}", table.getName(), uri);
 
-    String uri = HttpEndpointURIBuilder.create().from(table).build();
-    log.info("Registering GET handler for table {} at {}", table.getName(), uri);
-
-    router.route(HttpMethod.GET, uri)
-      .produces(MimeType.JSON)
-      .handler(instance);
+      router.route(HttpMethod.GET, uri)
+        .produces(MimeType.JSON)
+        .handler(instance);
+    });
   }
 
   static class HttpGetByIdHandler extends AbstractHttpHandler {
@@ -38,8 +35,7 @@ public class HttpGetByIdHandlerService implements HttpHandlerService {
   }
 
     public void handle(RoutingContext context, String requestId) {
-      SearchOptions options = SearchOptions.create(table);
-      options.from(context);
+      var options = this.getSearchOptions(context);
 
       log.info("GET request for table {}", table.getName());
 

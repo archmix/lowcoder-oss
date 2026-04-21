@@ -1,351 +1,350 @@
-package lowcoder.sql.interfaces;
+package lowcoder.sql.infra;
 
 import io.vertx.core.buffer.Buffer;
 import io.vertx.sqlclient.Tuple;
-import morphos.api.interfaces.Column;
+import morphos.api.interfaces.Field;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Optional;
 
-enum TupleType {
-  BIT(Column.Type.BIT) {
+public enum TypeAdapter {
+  BIT(Field.Type.BIT) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setBoolean(tuple, value);
     }
   },
-  TINYINT(Column.Type.TINYINT) {
+  TINYINT(Field.Type.TINYINT) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setInteger(tuple, value);
     }
   },
-  SMALLINT(Column.Type.SMALLINT) {
+  SMALLINT(Field.Type.SMALLINT) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setInteger(tuple, value);
     }
   },
-  INTEGER(Column.Type.INTEGER) {
+  INTEGER(Field.Type.INTEGER) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setInteger(tuple, value);
     }
   },
-  BIGINT(Column.Type.BIGINT) {
+  BIGINT(Field.Type.BIGINT) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setLong(tuple, value);
     }
   },
-  FLOAT(Column.Type.FLOAT) {
+  FLOAT(Field.Type.FLOAT) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setDouble(tuple, value);
     }
   },
-  REAL(Column.Type.REAL) {
+  REAL(Field.Type.REAL) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setDouble(tuple, value);
     }
   },
-  DOUBLE(Column.Type.DOUBLE) {
+  DOUBLE(Field.Type.DOUBLE) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setDouble(tuple, value);
     }
   },
-  NUMERIC(Column.Type.NUMERIC) {
+  NUMERIC(Field.Type.NUMERIC) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setDouble(tuple, value);
     }
   },
-  DECIMAL(Column.Type.DECIMAL) {
+  DECIMAL(Field.Type.DECIMAL) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setDouble(tuple, value);
     }
   },
-  CHAR(Column.Type.CHAR) {
+  CHAR(Field.Type.CHAR) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  VARCHAR(Column.Type.VARCHAR) {
+  VARCHAR(Field.Type.VARCHAR) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  LONGVARCHAR(Column.Type.LONGVARCHAR) {
+  LONGVARCHAR(Field.Type.LONGVARCHAR) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  DATE(Column.Type.DATE) {
+  DATE(Field.Type.DATE) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setDate(tuple, value);
     }
   },
-  TIME(Column.Type.TIME) {
+  TIME(Field.Type.TIME) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setDate(tuple, value);
     }
   },
-  TIMESTAMP(Column.Type.TIMESTAMP) {
+  TIMESTAMP(Field.Type.TIMESTAMP) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setDate(tuple, value);
     }
   },
-  BINARY(Column.Type.BINARY) {
+  BINARY(Field.Type.BINARY) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setBinary(tuple, value);
     }
   },
-  VARBINARY(Column.Type.VARBINARY) {
+  VARBINARY(Field.Type.VARBINARY) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setBinary(tuple, value);
     }
   },
-  LONGVARBINARY(Column.Type.LONGVARBINARY) {
+  LONGVARBINARY(Field.Type.LONGVARBINARY) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setBinary(tuple, value);
     }
   },
-  NULL(Column.Type.NULL) {
+  NULL(Field.Type.NULL) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setNull(tuple);
     }
   },
-  BLOB(Column.Type.BLOB) {
+  BLOB(Field.Type.BLOB) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setBinary(tuple, value);
     }
   },
-  CLOB(Column.Type.CLOB) {
+  CLOB(Field.Type.CLOB) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  BOOLEAN(Column.Type.BOOLEAN) {
+  BOOLEAN(Field.Type.BOOLEAN) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setBoolean(tuple, value);
     }
   },
-  NCHAR(Column.Type.NCHAR) {
+  NCHAR(Field.Type.NCHAR) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  NVARCHAR(Column.Type.NVARCHAR) {
+  NVARCHAR(Field.Type.NVARCHAR) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  LONG_NVARCHAR(Column.Type.LONG_NVARCHAR) {
+  LONG_NVARCHAR(Field.Type.LONG_NVARCHAR) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  NCLOB(Column.Type.NCLOB) {
+  NCLOB(Field.Type.NCLOB) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  TIME_WITH_TIMEZONE(Column.Type.TIME_WITH_TIMEZONE) {
+  TIME_WITH_TIMEZONE(Field.Type.TIME_WITH_TIMEZONE) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setDate(tuple, value);
     }
   },
-  TIMESTAMP_WITH_TIMEZONE(Column.Type.TIMESTAMP_WITH_TIMEZONE) {
+  TIMESTAMP_WITH_TIMEZONE(Field.Type.TIMESTAMP_WITH_TIMEZONE) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setDate(tuple, value);
     }
   },
-  DISTINCT(Column.Type.DISTINCT) {
+  DISTINCT(Field.Type.DISTINCT) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setNull(tuple);
     }
   },
-  OTHER(Column.Type.OTHER) {
+  OTHER(Field.Type.OTHER) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  UUID(Column.Type.UUID) {
+  UUID(Field.Type.UUID) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  ENUM(Column.Type.ENUM) {
+  ENUM(Field.Type.ENUM) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  XML(Column.Type.XML) {
+  XML(Field.Type.XML) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  MACADDR(Column.Type.MACADDR) {
+  MACADDR(Field.Type.MACADDR) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  INET(Column.Type.INET) {
+  INET(Field.Type.INET) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  CIDR(Column.Type.CIDR) {
+  CIDR(Field.Type.CIDR) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  JSON(Column.Type.JSON) {
+  JSON(Field.Type.JSON) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  ARRAY(Column.Type.ARRAY) {
+  ARRAY(Field.Type.ARRAY) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
     }
   },
-  INTERVAL(Column.Type.INTERVAL) {
+  INTERVAL(Field.Type.INTERVAL) {
     @Override
     protected void set(Tuple tuple, Object value) {
       setString(tuple, value);
       }
     };
 
-  private final Column.Type type;
+  private final Field.Type type;
 
-  TupleType(Column.Type type) {
+  TypeAdapter(Field.Type type) {
     this.type = type;
   }
 
-  public static Optional<TupleType> valueOf(Column.Type type) {
-    for (TupleType tupleType : TupleType.values()) {
-      if (tupleType.type == type) {
-        return Optional.of(tupleType);
+  public static TypeAdapter valueOf(Field field) {
+    for (TypeAdapter adapter : TypeAdapter.values()) {
+      if (field.getType().equals(adapter.type)) {
+        return adapter;
       }
     }
-    return Optional.empty();
+    return TypeAdapter.OTHER;
   }
 
   protected abstract void set(Tuple tuple, Object value);
 
-    private static void setBinary(Tuple tuple, Object value) {
-      tuple.addBuffer(Buffer.buffer(value.toString()));
+  private static void setBinary(Tuple tuple, Object value) {
+    tuple.addBuffer(Buffer.buffer(value.toString()));
+  }
+
+  private static void setString(Tuple tuple, Object value) {
+    tuple.addString(value.toString());
+  }
+
+  protected void setBoolean(Tuple tuple, Object value) {
+    if(value instanceof Boolean) {
+      tuple.addBoolean((Boolean) value);
+      return;
     }
-
-    private static void setString(Tuple tuple, Object value) {
-      tuple.addString(value.toString());
+    if(value instanceof String) {
+      tuple.addBoolean(Boolean.parseBoolean(value.toString()));
     }
-
-    protected void setBoolean(Tuple tuple, Object value) {
-      if(value instanceof Boolean) {
-        tuple.addBoolean((Boolean) value);
-        return;
-      }
-      if(value instanceof String) {
-        tuple.addBoolean(Boolean.parseBoolean(value.toString()));
-      }
-      if(value instanceof Number) {
-        tuple.addInteger(((Number) value).intValue());
-      }
-    }
-
-    protected void setInteger(Tuple tuple, Object value) {
-      if(value instanceof Number) {
-        tuple.addInteger(((Number) value).intValue());
-        return;
-      }
-      if(value instanceof String) {
-        tuple.addInteger(Integer.parseInt(value.toString()));
-      }
-    }
-
-    protected void setLong(Tuple tuple, Object value) {
-      if(value instanceof Number) {
-        tuple.addLong(((Number) value).longValue());
-        return;
-      }
-      if(value instanceof String) {
-        tuple.addLong(Long.parseLong(value.toString()));
-      }
-    }
-
-    protected void setDouble(Tuple tuple, Object value) {
-      if(value instanceof Number) {
-        tuple.addDouble(((Number) value).doubleValue());
-        return;
-      }
-      if(value instanceof String) {
-        tuple.addDouble(Double.parseDouble(value.toString()));
-      }
-    }
-
-    protected void setDate(Tuple tuple, Object value) {
-      if(value instanceof java.sql.Date) {
-        tuple.addLocalDate(((java.sql.Date) value).toLocalDate());
-        return;
-      }
-      if(value instanceof java.util.Date) {
-        LocalDate localDate = ((java.util.Date)value).toInstant()
-          .atZone(ZoneId.systemDefault())
-          .toLocalDate();
-
-        tuple.addLocalDate(localDate);
-        return;
-      }
-      if(value instanceof String) {
-        tuple.addLocalDate(LocalDate.parse(value.toString()));
-      }
-    }
-
-    public void setValue(Tuple tuple, Object value) {
-      if(value == null) {
-        setNull(tuple);
-        return;
-      }
-
-      this.set(tuple, value);
-    }
-
-    private static void setNull(Tuple tuple) {
-      tuple.addValue(null);
+    if(value instanceof Number) {
+      tuple.addInteger(((Number) value).intValue());
     }
   }
+
+  protected void setInteger(Tuple tuple, Object value) {
+    if(value instanceof Number) {
+      tuple.addInteger(((Number) value).intValue());
+      return;
+    }
+    if(value instanceof String) {
+      tuple.addInteger(Integer.parseInt(value.toString()));
+    }
+  }
+
+  protected void setLong(Tuple tuple, Object value) {
+    if(value instanceof Number) {
+      tuple.addLong(((Number) value).longValue());
+      return;
+    }
+    if(value instanceof String) {
+      tuple.addLong(Long.parseLong(value.toString()));
+    }
+  }
+
+  protected void setDouble(Tuple tuple, Object value) {
+    if(value instanceof Number) {
+      tuple.addDouble(((Number) value).doubleValue());
+      return;
+    }
+    if(value instanceof String) {
+      tuple.addDouble(Double.parseDouble(value.toString()));
+    }
+  }
+
+  protected void setDate(Tuple tuple, Object value) {
+    if(value instanceof java.sql.Date) {
+      tuple.addLocalDate(((java.sql.Date) value).toLocalDate());
+      return;
+    }
+    if(value instanceof java.util.Date) {
+      LocalDate localDate = ((java.util.Date)value).toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toLocalDate();
+
+      tuple.addLocalDate(localDate);
+      return;
+    }
+    if(value instanceof String) {
+      tuple.addLocalDate(LocalDate.parse(value.toString()));
+    }
+  }
+
+  public void setValue(Tuple tuple, Object value) {
+    if(value == null) {
+      setNull(tuple);
+      return;
+    }
+
+    this.set(tuple, value);
+  }
+
+  private static void setNull(Tuple tuple) {
+    tuple.addValue(null);
+  }
+}

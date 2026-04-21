@@ -1,12 +1,6 @@
 package lowcoder.openapi.infra;
 
-import io.vertx.core.json.JsonObject;
 import lowcoder.api.infra.HttpEndpointURIBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.regex.Pattern;
 
 public interface HttpUri {
   String get();
@@ -42,6 +36,10 @@ public interface HttpUri {
     public String id(){
       var parts = this.uri.split("/");
       return parts[parts.length -1];
+    }
+
+    public Number idAsNumber(){
+      return Integer.parseInt(this.id());
     }
 
     @Override

@@ -29,28 +29,5 @@
       <artifactId>lombok</artifactId>
       <scope>provided</scope>
     </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
-      <artifactId>legolas-mysql</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
-      <artifactId>legolas-postgresql</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
-      <artifactId>legolas-provided</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 </project>

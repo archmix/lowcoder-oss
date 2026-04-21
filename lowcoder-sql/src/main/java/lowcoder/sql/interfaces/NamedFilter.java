@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class NamedFilter {
   private final String name;
-  private final Predicate predicate;
+  private final FilterPredicate predicate;
 
   public static NamedFilter create(String filter) {
     var field = filter;
@@ -19,6 +19,6 @@ public class NamedFilter {
       predicate = filter.substring(filter.indexOf('[') + 1, filter.indexOf(']'));
     }
 
-    return new NamedFilter(field, Predicate.of(predicate));
+    return new NamedFilter(field, FilterPredicate.of(predicate));
   }
 }

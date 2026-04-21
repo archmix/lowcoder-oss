@@ -1,6 +1,6 @@
 package lowcoder.sql.interfaces;
 
-public enum Predicate {
+public enum FilterPredicate {
   EQUALS("", "="),
   GREATER_THAN("gt", ">"),
   LESS_THAN("lt","<"),
@@ -16,7 +16,7 @@ public enum Predicate {
   private final String suffix;
   private final String keyword;
 
-  Predicate(String prefix, String keyword) {
+  FilterPredicate(String prefix, String keyword) {
     this.suffix = prefix;
     this.keyword = keyword;
   }
@@ -29,8 +29,8 @@ public enum Predicate {
     return suffix;
   }
 
-  public static Predicate of(String predicate) {
-    for(Predicate p : Predicate.values()) {
+  public static FilterPredicate of(String predicate) {
+    for(FilterPredicate p : FilterPredicate.values()) {
       if(p.suffix().equals(predicate)) {
         return p;
       }

@@ -7,11 +7,12 @@ import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
 import lowcoder.core.interfaces.HttpHandlerService;
 import lowcoder.core.interfaces.HttpHandlerServiceSpecification;
-import morphos.api.interfaces.Table;
 import lowcoder.api.infra.HttpEndpointURIBuilder;
 import lowcoder.openapi.infra.MimeType;
 import lowcoder.openapi.interfaces.AbstractHttpHandler;
 import lowcoder.sql.infra.ConnectionPool;
+import lowcoder.sql.application.LowcoderCache;
+import morphos.api.interfaces.Table;
 
 @HttpHandlerServiceSpecification
 @Slf4j
@@ -48,14 +49,16 @@ public class HttpPostHandlerService implements HttpHandlerService {
     }
 
     private void handlePost(RoutingContext context, Buffer buffer) {
-      pool.insertCommand(table).execute(buffer.toJsonObject(), ok -> {
+      var handler = LowcoderCache.create().getInsertSqlHandler(table);
+      pool.insertCommand(handler).execute(buffer.toJsonObject(), ok -> {
         log.info("POST request for table {} executed", table.getName());
         context.response().setStatusCode(200).end();
       }, errorHandler(context));
     }
 
     private void handleCreated(RoutingContext context, Buffer buffer) {
-      pool.insertCommand(table).executeAndGetGeneratedKeys(buffer.toJsonObject(), ids -> {
+      var handler = LowcoderCache.create().getInsertSqlHandler(table);
+      pool.insertCommand(handler).executeAndGetGeneratedKeys(buffer.toJsonObject(), ids -> {
         String[] values = ids.stream().map(id -> id.getValue().toString()).toArray(String[]::new);
 
         String locationURI = HttpEndpointURIBuilder.create().path(table.getName()).path(values).build();

@@ -8,7 +8,7 @@ import legolas.runtime.core.interfaces.RunningEnvironment;
 import lowcoder.testsuite.application.DomainTests;
 import org.junit.jupiter.api.BeforeAll;
 
-public class PostgreSQLTestSuite extends DomainTests {
+public class OpenApiPostgresTest extends DomainTests {
   @BeforeAll
   public static void beforeAll(RunningEnvironment environment, Vertx vertx) {
     setPostgreConfig(environment);

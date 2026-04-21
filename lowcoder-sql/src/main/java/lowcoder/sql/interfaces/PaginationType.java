@@ -1,4 +1,4 @@
-package lowcoder.sql.infra;
+package lowcoder.sql.interfaces;
 
 import io.vertx.sqlclient.Tuple;
 
@@ -10,9 +10,9 @@ public enum PaginationType {
     }
 
     @Override
-    public void setTuple(Tuple tuple, int offset, int limit) {
-      tuple.addInteger(limit);
-      tuple.addInteger(offset);
+    public void setTuple(Tuple tuple, Long offset, Long limit) {
+      tuple.addLong(limit);
+      tuple.addLong(offset);
     }
   },
   OFFSET_FETCH{
@@ -22,9 +22,9 @@ public enum PaginationType {
     }
 
     @Override
-    public void setTuple(Tuple tuple, int offset, int limit) {
-      tuple.addInteger(offset);
-      tuple.addInteger(limit);
+    public void setTuple(Tuple tuple, Long offset, Long limit) {
+      tuple.addLong(offset);
+      tuple.addLong(limit);
     }
   };
 
@@ -37,5 +37,5 @@ public enum PaginationType {
 
   public abstract String getStatement();
 
-  public abstract void setTuple(Tuple tuple, int offset, int limit);
+  public abstract void setTuple(Tuple tuple, Long offset, Long limit);
 }

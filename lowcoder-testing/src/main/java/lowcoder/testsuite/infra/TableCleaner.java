@@ -19,7 +19,7 @@ public class TableCleaner implements JDBCPoolConsumer {
 
   public TableCleaner() {}
 
-  public static TableCleaner of() {
+  public static TableCleaner create() {
     return instance;
   }
 

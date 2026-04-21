@@ -29,17 +29,19 @@
 
   <properties>
     <lowcoderVersion>0.1.0-SNAPSHOT</lowcoderVersion>
-    <legolasVersion>1.0.15</legolasVersion>
-    <compozitorVersion>0.1.19</compozitorVersion>
+    <legolasVersion>1.0.17-SNAPSHOT</legolasVersion>
+    <compozitorVersion>0.1.20</compozitorVersion>
     <spectraVersion>0.1.0</spectraVersion>
-    <morphosVersion>0.1.0</morphosVersion>
+    <morphosVersion>0.1.1</morphosVersion>
 
-    <vertxVersion>4.5.21</vertxVersion>
+    <vertxVersion>4.5.24</vertxVersion>
+    <jacksonVersion>2.16.1</jacksonVersion>
     <agroalVersion>1.16</agroalVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <restAssuredVersion>5.4.0</restAssuredVersion>
     <hamcrestVersion>2.2</hamcrestVersion>
     <javaUUIDGeneratorVersion>5.1.0</javaUUIDGeneratorVersion>
+    <jsqlParserVersion>5.0</jsqlParserVersion>
   </properties>
 
   <dependencyManagement>
@@ -152,6 +154,18 @@
         <groupId>io.rest-assured</groupId>
         <artifactId>rest-assured</artifactId>
         <version>${restAssuredVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.jsqlparser</groupId>
+        <artifactId>jsqlparser</artifactId>
+        <version>${jsqlParserVersion}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jacksonVersion}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

@@ -13,6 +13,6 @@ public class SetExpression implements Function<Field, String> {
 
   @Override
   public String apply(Field field) {
-    return field.getName() + " = ?";
+    return field.getName() + "=?";
   }
 }

@@ -5,13 +5,13 @@ import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import lowcoder.api.infra.LowcoderConfig;
 import lowcoder.testsuite.infra.TableCleaner;
 import spectra.interfaces.Cooldown;
 import spectra.interfaces.Spectrum;
 
 import java.util.function.Consumer;
 
+import static lowcoder.api.infra.LowcoderConfiguration.HttpEntries.*;
 import static org.hamcrest.Matchers.*;
 
 public abstract class OpenApiSpectrum extends Spectrum {
@@ -26,13 +26,13 @@ public abstract class OpenApiSpectrum extends Spectrum {
 
   @Cooldown
   void cooldown() {
-    TableCleaner.of().clean(vertx(), resources());
+    TableCleaner.create().clean(vertx(), resources());
   }
 
   protected abstract String[] resources();
 
   private RequestSpecification given() {
-    return RestAssured.given().port(LowcoderConfig.HTTP.getPort(config())).log().all();
+    return RestAssured.given().port(PORT.get(config())).log().all();
   }
 
   protected HttpUri.Location doPostAssertionAndGetLocation(HttpUri.Resource resource, String json) {

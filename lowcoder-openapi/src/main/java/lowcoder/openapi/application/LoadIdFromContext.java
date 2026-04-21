@@ -5,16 +5,16 @@ import io.vertx.ext.web.RoutingContext;
 import morphos.api.interfaces.Table;
 
 public class LoadIdFromContext {
-  private static LoadIdFromContext instance = new LoadIdFromContext();
+  private static final LoadIdFromContext INSTANCE = new LoadIdFromContext();
 
-  public static LoadIdFromContext of() {
-    return instance;
+  public static LoadIdFromContext create() {
+    return INSTANCE;
   }
 
   public void load(RoutingContext context, Table table, JsonObject  json) {
     table.getPrimaryKeys().forEach(pk -> {
-      String name = pk.getColumn().getName();
-      String value = context.pathParam(name);
+      var name = pk.getName();
+      var value = context.pathParam(name);
       json.put(name, value);
     });
   }

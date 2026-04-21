@@ -17,7 +17,7 @@ class HttpErrorResponse {
 
     log.error(error.getMessage(), error);
 
-    JsonObject responseBody = JsonObject.of();
+    JsonObject responseBody = new JsonObject();
     responseBody.put("requestId", requestId);
     responseBody.put("message", error.getMessage());
 

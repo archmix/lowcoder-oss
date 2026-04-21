@@ -1,7 +1,5 @@
 package lowcoder.api.infra;
 
-import morphos.api.interfaces.Table;
-
 public class HttpEndpointURIBuilder {
   private StringBuilder uri = new StringBuilder();
 
@@ -17,11 +15,6 @@ public class HttpEndpointURIBuilder {
 
   HttpEndpointURIBuilder(String version) {
     path("api", version);
-  }
-
-  public HttpEndpointURIBuilder from(Table table) {
-    return this.path(table.getName())
-      .pathParam(table.getPrimaryKeys().stream().map(pk -> pk.getColumn().getName()).toArray(String[]::new));
   }
 
   public HttpEndpointURIBuilder path(String... paths) {

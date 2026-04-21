@@ -2,13 +2,15 @@ package lowcoder.sql.interfaces;
 
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor(staticName = "of")
+@RequiredArgsConstructor(staticName = "create")
+@Getter
 public class PagedData {
-  private final long total;
-  private final long limit;
-  private final long offset;
+  private final Long total;
+  private final Long limit;
+  private final Long offset;
   private final JsonArray data;
 
   public String encode() {

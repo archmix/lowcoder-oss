@@ -6,6 +6,8 @@ import lowcoder.promise.interfaces.FuturePromise;
 import lowcoder.sql.infra.ConnectionPool;
 import morphos.api.interfaces.Table;
 
+import java.util.Collection;
+
 public interface RouterService {
-    void accept(Vertx vertx, Router router, ConnectionPool pool, Table table, FuturePromise<Void> promise);
+    void accept(Vertx vertx, Router router, ConnectionPool pool, Collection<Table> tables, FuturePromise<Void> promise);
 }

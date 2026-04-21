@@ -26,34 +26,12 @@
 
     <dependency>
       <groupId>org.archmix</groupId>
-      <artifactId>legolas-provided</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
-      <artifactId>legolas-core</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
-      <artifactId>lowcoder-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
       <artifactId>lowcoder-sql</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.archmix</groupId>
       <artifactId>lowcoder-testing</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.archmix</groupId>
-      <artifactId>legolas-postgresql</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

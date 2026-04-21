@@ -15,7 +15,7 @@ public class NamedFilterTest {
     var column = table.getColumn(namedFilter.getName()).get();
 
     assertEquals(namedFilter.getName(), column.getName());
-    assertEquals(namedFilter.getPredicate(), Predicate.IS_NULL);
+    assertEquals(namedFilter.getPredicate(), FilterPredicate.IS_NULL);
   }
 
   @Test
@@ -24,7 +24,7 @@ public class NamedFilterTest {
     var column = table().getColumn(namedFilter.getName()).get();
 
     assertEquals(namedFilter.getName(), column.getName());
-    assertEquals(namedFilter.getPredicate(), Predicate.IN);
+    assertEquals(namedFilter.getPredicate(), FilterPredicate.IN);
   }
 
   private Table table(){

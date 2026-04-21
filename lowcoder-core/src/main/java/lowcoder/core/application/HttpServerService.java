@@ -8,7 +8,7 @@ import lowcoder.api.application.AbstractContainerService;
 import lowcoder.api.interfaces.ContainerServiceSpecification;
 import lowcoder.api.interfaces.StartupService;
 import lowcoder.api.interfaces.StartupServiceSpecification;
-import lowcoder.promise.interfaces.AsyncHandlers;
+import lowcoder.promise.interfaces.Handlers;
 import lowcoder.promise.interfaces.FuturePromise;
 
 @ContainerServiceSpecification
@@ -33,7 +33,7 @@ public class HttpServerService extends AbstractContainerService implements Start
   @Override
   public void start(FuturePromise<Void> startPromise) {
     server = vertx.createHttpServer();
-    server.exceptionHandler(AsyncHandlers.exceptionHandler());
+    server.exceptionHandler(Handlers.exceptionHandler());
   }
 
   @Override

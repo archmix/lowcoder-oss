@@ -5,7 +5,7 @@ import io.vertx.core.Handler;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class AsyncHandlers {
+public class Handlers {
   public static Handler<Throwable> exceptionHandler(){
     return new Handler<Throwable>() {
       @Override
@@ -16,7 +16,7 @@ public class AsyncHandlers {
   }
 
   public static <T> void handle(AsyncResult<T> result, PromiseHandler<T> onSuccess) {
-    AsyncHandlers.handle(result, onSuccess, onFail ->{});
+    Handlers.handle(result, onSuccess, onFail ->{});
   }
 
   public static <T> void handle(AsyncResult<T> result, PromiseHandler<T> onSuccess, PromiseHandler<T> onFail) {
@@ -27,5 +27,13 @@ public class AsyncHandlers {
       return;
     }
     onSuccess.handle(result);
+  }
+
+  public static void tryAndCatch(Runnable runnable, Handler<Throwable> onFail) {
+    try {
+      runnable.run();
+    } catch (Throwable e) {
+      onFail.handle(e);
+    }
   }
 }

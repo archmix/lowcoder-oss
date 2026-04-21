@@ -6,12 +6,12 @@ import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
 import lowcoder.core.interfaces.HttpHandlerService;
 import lowcoder.core.interfaces.HttpHandlerServiceSpecification;
-import morphos.api.interfaces.Table;
 import lowcoder.api.infra.HttpEndpointURIBuilder;
 import lowcoder.openapi.infra.MimeType;
 import lowcoder.openapi.interfaces.AbstractHttpHandler;
 import lowcoder.sql.infra.ConnectionPool;
 import lowcoder.sql.interfaces.SearchOptions;
+import morphos.api.interfaces.Table;
 
 @Slf4j
 @HttpHandlerServiceSpecification
@@ -34,11 +34,9 @@ public class HttpGetHandlerService implements HttpHandlerService {
     }
 
     public void handle(RoutingContext context, String requestId) {
-      SearchOptions options = SearchOptions.create(this.table);
-      options.from(context);
-
       log.info("GET request for table {}", table.getName());
 
+      SearchOptions options = this.getSearchOptions(context);
       pool.selectCommand().findPaged(options, select ->{
         context.response()
           .setStatusCode(200)
